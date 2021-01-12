@@ -19,11 +19,17 @@ interface IFormValues {
   password: string
 }
 
+enum regiserSteps {
+  register = 1,
+  resend = 2,
+  reset = 3
+}
+
 const Register:React.FC<IRegisterProps> = ({}) => {
   const { isAuth } = useSelector((state: AppStateType) => state.user);
   const [serverError, setServerError] = useState("");
   const [email, setEmail] = useState("");
-  const [registerStep, setRegisterStep] = useState("register"); // Use an enum with TS;
+  const [registerStep, setRegisterStep] = useState(regiserSteps.register);
 
   const dispatch: any = useDispatch();
 
@@ -43,7 +49,7 @@ const Register:React.FC<IRegisterProps> = ({}) => {
     dispatch(attemptRegister(values))
       .then(() => {
         setEmail(values.email);
-        setRegisterStep("resend");
+        setRegisterStep(regiserSteps.resend);
       })
       .catch((error: any) => {
         if (error.response) {
@@ -54,7 +60,7 @@ const Register:React.FC<IRegisterProps> = ({}) => {
 
   const onResendEmail = () => {
     dispatch(attemptResendConfirmation(email))
-      .then(() => setRegisterStep("reset"))
+      .then(() => setRegisterStep(regiserSteps.reset))
       .catch((error: any) => {
         if (error.response) {
           setServerError(error.response.data.message);
@@ -72,7 +78,7 @@ const Register:React.FC<IRegisterProps> = ({}) => {
 
   function renderSwitch() {
     switch (registerStep) {
-      case "register":
+      case regiserSteps.register:
         return (
           <Formik
             initialValues={initialValues}
@@ -107,7 +113,7 @@ const Register:React.FC<IRegisterProps> = ({}) => {
             }}
           </Formik>
         );
-      case "resend":
+      case regiserSteps.resend:
         return (
           <div className='container'>
             <p>A verification email has been sent.</p>
@@ -123,7 +129,7 @@ const Register:React.FC<IRegisterProps> = ({}) => {
           </div>
         );
 
-      case "reset":
+      case regiserSteps.reset:
         return (
           <div className='container'>
             <p>Still not received an email? </p>

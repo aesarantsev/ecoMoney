@@ -15,6 +15,7 @@ import {
   Register
 } from "./components";
 import ProtectedRoute from './components/protectedRoute'
+import CategoriesList from "./components/categories/CategoriesList";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -34,6 +35,7 @@ export default function App() {
       <NavBar />
       <Switch>
         <Route path='/home' exact component={Home} />
+        <ProtectedRoute path='/categories' component={CategoriesList} />
         <ProtectedRoute path='/my-profile' component={Profile} />
         <Route path='/account/confirm/:token' exact component={ConfirmPage} />
         <Route path='/register' exact component={Register} />
