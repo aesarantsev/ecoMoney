@@ -15,6 +15,7 @@ import User, {
 import Token, { IToken, ITokenModel } from "../models/token";
 
 import { CallbackError } from "mongoose";
+import { createDefaultCategories } from "../heplers/categories";
 // import { function } from "joi";
 
 
@@ -398,6 +399,8 @@ router.get("/confirmation/:token", (req, res) => {
         return res
           .status(400)
           .send({ message: "This user has already been verified. Please log in." });
+
+      createDefaultCategories(user._id);
 
       // Verify and save the user
       user.isVerified = true;
