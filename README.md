@@ -13,3 +13,4 @@ To start the development server, run:
 ```sh
 docker-compose up --build
 ```
+And go to http://localhost:3000/

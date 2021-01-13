@@ -19,6 +19,13 @@ router.post('/create', async (req: Request, res: Response) => {
 
 })
 
+router.post('/remove', async (req: Request, res: Response) => { 
+    const removedCategory = await Category.findByIdAndDelete(req.body.categoryId);
+    const userCategories = await Category.find({ userId: req.user?._id }).lean();
+
+    res.status(200).send({ message: "Категория удалена", categories: userCategories });
+})
+
 router.get('/getCategories', async (req: Request, res: Response) => {
     const categories = await Category.find({ userId: req.user?._id}).lean();
     res.status(200).send({ categories });

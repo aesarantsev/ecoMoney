@@ -1,10 +1,12 @@
 import axios from './index';
 import { ICreateCategory } from '../../entities/category';
 
-const createCategory = (category: ICreateCategory) => axios.post("/category/create", category);
-const getCategories = () => axios.get("/category/getCategories");
+const createCategoryQuery = (category: ICreateCategory) => axios.post("/category/create", category);
+const getCategoriesQuery = () => axios.get("/category/getCategories");
+const removeCategoryQuery = (categoryId: string) => axios.post("/category/remove", { categoryId });
 
 export {
-    createCategory,
-    getCategories
+    createCategoryQuery,
+    getCategoriesQuery,
+    removeCategoryQuery
 }

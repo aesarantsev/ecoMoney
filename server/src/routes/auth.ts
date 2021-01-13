@@ -257,13 +257,15 @@ router.post("/register", async (req, res) => {
             return res.status(500).send("An unexpected error occurred");
           }
           // send verification email
+          const link = `<a href="http://${host}/account/confirm/${token.token}"`;
+          console.log('Link for confirm account', link)
           const message = {
             to: user?.email,
             from: `${sendingEmail}`,
             subject: "Email Verification",
             text: "Some uselss text",
             html: `<p>Please verify your account by clicking the link: 
-            <a href="http://${host}/account/confirm/${token.token}">http://${host}/account/confirm/${token.token}</a> </p>`,
+            <a href="${link}">${link}</a> </p>`,
           };
           sgMail
             .send(message)
